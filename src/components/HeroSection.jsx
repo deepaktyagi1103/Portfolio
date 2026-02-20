@@ -38,11 +38,11 @@ const HeroSection = () => {
       {/* Floating code background */}
       <div className="absolute inset-0 overflow-hidden opacity-10">
         <pre className="text-[#22d3ee] text-xs animate-float">
-          {`const developer = {
+          {/* {`const developer = {
   name: 'Deepak Tyagi',
   skills: ['React', 'Node.js', 'MongoDB'],
   passion: 'Building scalable solutions'
-};`}
+};`} */}
         </pre>
       </div>
 
