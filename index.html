@@ -12,26 +12,20 @@
 <style>
 /* Layout: a storefront built in Liquid. Hero pairs the name with a live template panel; work reads as a dated timeline; projects sit in browser frames. */
 :root{
-  --bg:#0d0f1a; --surface:#151829; --surface-2:#1c2036; --line:#2a2f4a;
-  --fg:#eceef8; --muted:#9aa0bd; --accent:#f2b544; --accent-ink:#1a1206;
-  --cool:#7fd4c4; --tag:#c9a7ff;
+  --bg:#f7f7fb; --surface:#ffffff; --surface-2:#eef0f6; --line:#dfe2ec;
+  --fg:#12152a; --muted:#5b6180; --accent:#e0960f; --accent-text:#9a5b00; --accent-ink:#1a1206;
+  --cool:#0f7f6e; --tag:#6d3fc7;
   --display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
   --body:"Instrument Sans", "Segoe UI", system-ui, sans-serif;
   --mono:"JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
   --r:14px;
-  color-scheme:dark;
+  color-scheme:light;
 }
-@media (prefers-color-scheme: light){
-  :root:not([data-theme="dark"]){
-    --bg:#f4f5f9; --surface:#ffffff; --surface-2:#eceef5; --line:#d9dce8;
-    --fg:#141728; --muted:#5a6080; --accent:#b97a0c; --accent-ink:#ffffff;
-    --cool:#11806f; --tag:#7340c9; color-scheme:light;
-  }
-}
-:root[data-theme="light"]{
-  --bg:#f4f5f9; --surface:#ffffff; --surface-2:#eceef5; --line:#d9dce8;
-  --fg:#141728; --muted:#5a6080; --accent:#b97a0c; --accent-ink:#ffffff;
-  --cool:#11806f; --tag:#7340c9; color-scheme:light;
+/* the code editor panel stays dark, like a real editor */
+.panel{
+  --bg:#0d0f1a; --surface:#151829; --surface-2:#1c2036; --line:#2a2f4a;
+  --fg:#eceef8; --muted:#9aa0bd; --accent:#f2b544; --accent-text:#f2b544;
+  --cool:#7fd4c4; --tag:#c9a7ff; color:var(--fg);
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -50,13 +44,13 @@ body::before{content:""; position:fixed; inset:0 0 auto; height:env(safe-area-in
 nav.top{position:sticky; top:env(safe-area-inset-top,0px); z-index:9; background:color-mix(in oklab, var(--bg) 85%, transparent); backdrop-filter:blur(10px); border-bottom:1px solid var(--line)}
 nav.top .wrap{display:flex; align-items:center; justify-content:space-between; gap:16px; height:60px}
 .logo{font-family:var(--mono); font-weight:500; font-size:.95rem; text-decoration:none}
-.logo b{color:var(--accent); font-weight:500}
+.logo b{color:var(--accent-text); font-weight:500}
 .links{display:flex; gap:22px; align-items:center}
 .links a{text-decoration:none; color:var(--muted); font-size:.92rem; transition:color .2s}
 .links a:hover{color:var(--fg)}
 .btn{display:inline-flex; align-items:center; gap:8px; padding:10px 18px; border-radius:999px; font-weight:600; font-size:.92rem; text-decoration:none; border:1px solid var(--line); background:var(--surface); color:var(--fg); cursor:pointer; font-family:var(--body); transition:transform .2s, border-color .2s, background .2s}
-.btn:hover{transform:translateY(-2px); border-color:var(--accent)}
-.btn.primary{background:var(--accent); color:var(--accent-ink); border-color:var(--accent)}
+.btn:hover{transform:translateY(-2px); border-color:var(--accent-text)}
+.btn.primary{background:var(--accent); color:var(--accent-ink); border-color:var(--accent-text)}
 .btn.sm{padding:7px 14px; font-size:.85rem}
 @media (max-width:760px){ .links a.hide-sm{display:none} .links{gap:14px} }
 
@@ -79,7 +73,7 @@ nav.top .wrap{display:flex; align-items:center; justify-content:space-between; g
 .facts small{color:var(--muted); font-size:.82rem; margin-top:6px}
 
 /* liquid panel */
-.panel{background:var(--surface); border:1px solid var(--line); border-radius:var(--r); overflow:hidden; box-shadow:0 30px 60px -30px rgba(0,0,0,.45)}
+.panel{background:var(--surface); border:1px solid var(--line); border-radius:var(--r); overflow:hidden; box-shadow:0 30px 60px -28px rgba(18,21,42,.35)}
 .panel-bar{display:flex; align-items:center; gap:6px; padding:10px 12px; border-bottom:1px solid var(--line); background:var(--surface-2)}
 .panel-bar i{width:10px; height:10px; border-radius:50%; background:var(--line)}
 .tabs{display:flex; gap:4px; margin-left:10px}
@@ -87,7 +81,7 @@ nav.top .wrap{display:flex; align-items:center; justify-content:space-between; g
 .tab[aria-selected="true"]{background:var(--bg); color:var(--fg)}
 .code{font-family:var(--mono); font-size:.84rem; line-height:1.75; padding:18px 20px; margin:0; overflow-x:auto; white-space:pre; color:var(--fg)}
 .code .ln{display:inline-block; width:1.8em; color:var(--line); user-select:none}
-.t-tag{color:var(--tag)} .t-key{color:var(--cool)} .t-str{color:var(--accent)} .t-com{color:var(--muted); font-style:italic}
+.t-tag{color:var(--tag)} .t-key{color:var(--cool)} .t-str{color:var(--accent-text)} .t-com{color:var(--muted); font-style:italic}
 .caret{display:inline-block; width:8px; height:1.05em; vertical-align:-2px; background:var(--accent); animation:blink 1s steps(1) infinite}
 @keyframes blink{50%{opacity:0}}
 .render{padding:22px}
@@ -95,26 +89,26 @@ nav.top .wrap{display:flex; align-items:center; justify-content:space-between; g
 .render-card h3{font-size:1.6rem}
 .chips{display:flex; flex-wrap:wrap; gap:8px}
 .chip{font-family:var(--mono); font-size:.76rem; padding:5px 10px; border-radius:999px; background:var(--surface-2); border:1px solid var(--line); color:var(--fg)}
-.chip.hot{border-color:color-mix(in oklab,var(--accent) 55%, var(--line)); color:var(--accent)}
+.chip.hot{border-color:color-mix(in oklab,var(--accent) 55%, var(--line)); color:var(--accent-text)}
 
 /* sections */
 section{padding-block:80px}
 .sec-head{display:flex; flex-wrap:wrap; align-items:end; justify-content:space-between; gap:16px; margin-bottom:40px}
 .sec-head h2{font-size:clamp(2rem,4.5vw,3.2rem); font-weight:800; letter-spacing:-.025em}
 .sec-head p{color:var(--muted); max-width:44ch}
-.sec-head .label{display:block; margin-bottom:10px; color:var(--accent)}
+.sec-head .label{display:block; margin-bottom:10px; color:var(--accent-text)}
 
 /* timeline */
 .timeline{display:grid; gap:0; border-left:1px solid var(--line); margin-left:6px}
 .job{position:relative; padding:0 0 40px 32px; display:grid; grid-template-columns:200px 1fr; gap:24px}
 .job > *{min-width:0}
 .job::before{content:""; position:absolute; left:-7px; top:6px; width:13px; height:13px; border-radius:50%; background:var(--bg); border:2px solid var(--line)}
-.job.now::before{border-color:var(--accent); background:var(--accent)}
+.job.now::before{border-color:var(--accent-text); background:var(--accent)}
 .when{font-family:var(--mono); font-size:.82rem; color:var(--muted); font-variant-numeric:tabular-nums}
 .when .place{display:block; margin-top:4px}
-.badge{display:inline-block; margin-top:8px; font-family:var(--mono); font-size:.7rem; letter-spacing:.06em; text-transform:uppercase; padding:3px 8px; border-radius:6px; background:color-mix(in oklab,var(--accent) 18%, transparent); color:var(--accent)}
+.badge{display:inline-block; margin-top:8px; font-family:var(--mono); font-size:.7rem; letter-spacing:.06em; text-transform:uppercase; padding:3px 8px; border-radius:6px; background:color-mix(in oklab,var(--accent) 18%, transparent); color:var(--accent-text)}
 .job h3{font-size:1.3rem; font-weight:600}
-.job .co{color:var(--accent); font-weight:600; margin-top:2px}
+.job .co{color:var(--accent-text); font-weight:600; margin-top:2px}
 .job ul{margin:12px 0 0; padding-left:18px; color:var(--muted); display:grid; gap:6px}
 .job ul li::marker{color:var(--line)}
 .job .chips{margin-top:14px}
@@ -145,7 +139,7 @@ section{padding-block:80px}
 .proj-body h3{font-size:1.25rem; font-weight:600}
 .proj-body p{color:var(--muted); font-size:.95rem}
 .proj-body .chips{margin-top:auto; padding-top:8px}
-.proj-link{display:inline-flex; gap:6px; align-items:center; font-family:var(--mono); font-size:.8rem; color:var(--accent); text-decoration:none}
+.proj-link{display:inline-flex; gap:6px; align-items:center; font-family:var(--mono); font-size:.8rem; color:var(--accent-text); text-decoration:none}
 .proj-link:hover{text-decoration:underline}
 @media (max-width:960px){ .projects{grid-template-columns:1fr 1fr} }
 @media (max-width:640px){ .projects{grid-template-columns:1fr} }
@@ -154,7 +148,7 @@ section{padding-block:80px}
 .skills{display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:var(--r); overflow:hidden}
 .sk{background:var(--bg); padding:26px; display:grid; gap:14px; align-content:start}
 .sk h3{font-size:1.05rem; font-weight:600; display:flex; align-items:center; gap:10px}
-.sk h3 code{font-family:var(--mono); font-size:.75rem; color:var(--accent); font-weight:400}
+.sk h3 code{font-family:var(--mono); font-size:.75rem; color:var(--accent-text); font-weight:400}
 @media (max-width:900px){ .skills{grid-template-columns:1fr 1fr} }
 @media (max-width:560px){ .skills{grid-template-columns:1fr} }
 
@@ -162,7 +156,7 @@ section{padding-block:80px}
 .about{display:grid; grid-template-columns:1.2fr 1fr; gap:48px}
 .about > *{min-width:0}
 .about .big{font-family:var(--display); font-size:clamp(1.4rem,2.6vw,1.9rem); line-height:1.35; font-weight:400}
-.about .big em{font-style:normal; color:var(--accent)}
+.about .big em{font-style:normal; color:var(--accent-text)}
 .about .text{color:var(--muted); margin-top:20px; max-width:60ch; display:grid; gap:14px}
 .list{display:grid; gap:0}
 .list .item{display:flex; justify-content:space-between; gap:16px; padding:16px 0; border-bottom:1px solid var(--line)}
@@ -183,7 +177,7 @@ section{padding-block:80px}
 .crow{display:flex; align-items:center; justify-content:space-between; gap:12px; padding:14px 16px; background:var(--bg); border:1px solid var(--line); border-radius:12px}
 .crow div{min-width:0}
 .crow .val{font-family:var(--mono); font-size:.9rem; overflow-wrap:anywhere; user-select:all}
-.crow a.val{text-decoration:none} .crow a.val:hover{color:var(--accent)}
+.crow a.val{text-decoration:none} .crow a.val:hover{color:var(--accent-text)}
 @media (max-width:700px){ .rows{grid-template-columns:1fr} }
 
 footer{padding-block:40px 48px; color:var(--muted); font-size:.85rem}
@@ -193,7 +187,7 @@ footer .wrap{display:flex; flex-wrap:wrap; justify-content:space-between; gap:12
 /* value strip */
 .value{display:grid; grid-template-columns:repeat(3,1fr); gap:18px}
 .vcard{background:var(--surface); border:1px solid var(--line); border-radius:var(--r); padding:24px; display:grid; gap:10px; align-content:start}
-.vnum{color:var(--accent); font-size:.8rem}
+.vnum{color:var(--accent-text); font-size:.8rem}
 .vcard h3{font-size:1.25rem; font-weight:600}
 .vcard p{color:var(--muted); font-size:.95rem}
 @media (max-width:860px){ .value{grid-template-columns:1fr} }
@@ -207,11 +201,11 @@ footer .wrap{display:flex; flex-wrap:wrap; justify-content:space-between; gap:12
 
 /* case studies */
 .cases{display:grid; gap:28px}
-.case{display:grid; grid-template-columns:1.15fr 1fr; gap:36px; align-items:center; padding:24px; background:var(--surface); border:1px solid var(--line); border-radius:20px}
+.case{box-shadow:0 1px 2px rgba(18,21,42,.04); display:grid; grid-template-columns:1.15fr 1fr; gap:36px; align-items:center; padding:24px; background:var(--surface); border:1px solid var(--line); border-radius:20px}
 .case > *{min-width:0}
 .case:nth-child(even) .shot{order:2}
 .shot{display:block; border-radius:12px; overflow:hidden; border:1px solid var(--line); background:var(--surface-2); text-decoration:none; position:relative; transition:transform .35s, box-shadow .35s}
-a.shot:hover{transform:translateY(-4px) rotate(-.4deg); box-shadow:0 24px 50px -24px rgba(0,0,0,.5)}
+a.shot:hover{transform:translateY(-4px) rotate(-.4deg); box-shadow:0 24px 50px -24px rgba(18,21,42,.25)}
 .chrome{display:flex; align-items:center; gap:6px; padding:9px 12px; border-bottom:1px solid var(--line); background:var(--bg)}
 .chrome i{width:9px; height:9px; border-radius:50%; background:var(--line)}
 .chrome span{margin-left:8px; font-size:.72rem; color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
@@ -235,7 +229,7 @@ a.shot:hover{transform:translateY(-4px) rotate(-.4deg); box-shadow:0 24px 50px -
 .skc:hover{transform:translateY(-3px); border-color:color-mix(in oklab,var(--accent) 50%, var(--line))}
 .skc .top{display:flex; justify-content:space-between; align-items:center; gap:10px}
 .skc h4{margin:0; font-family:var(--display); font-size:1.08rem; font-weight:600}
-.skc .lvl{font-family:var(--mono); font-size:.7rem; letter-spacing:.06em; text-transform:uppercase; color:var(--accent)}
+.skc .lvl{font-family:var(--mono); font-size:.7rem; letter-spacing:.06em; text-transform:uppercase; color:var(--accent-text)}
 .meter{display:grid; grid-template-columns:repeat(5,1fr); gap:4px}
 .seg{height:6px; border-radius:3px; background:var(--surface-2); width:100%; min-width:14px}
 .seg.on{background:var(--accent)}
@@ -250,7 +244,7 @@ a.shot:hover{transform:translateY(-4px) rotate(-.4deg); box-shadow:0 24px 50px -
 .shotwrap{display:grid; gap:10px; min-width:0}
 .views{display:flex; gap:6px}
 .vbtn{font-family:var(--mono); font-size:.75rem; padding:6px 12px; border-radius:8px; border:1px solid var(--line); background:transparent; color:var(--muted); cursor:pointer}
-.vbtn[aria-pressed="true"]{background:var(--surface-2); color:var(--fg); border-color:var(--accent)}
+.vbtn[aria-pressed="true"]{background:var(--surface-2); color:var(--fg); border-color:var(--accent-text)}
 .case:nth-child(even) .shotwrap{order:2}
 @media (max-width:860px){ .case:nth-child(even) .shotwrap{order:0} }
 
@@ -587,7 +581,7 @@ a.shot:hover{transform:translateY(-4px) rotate(-.4deg); box-shadow:0 24px 50px -
 <section id="about">
   <div class="wrap about">
     <div class="rv">
-      <span class="label" style="color:var(--accent)">About</span>
+      <span class="label" style="color:var(--accent-text)">About</span>
       <p class="big" style="margin-top:12px">I'm a developer from Ghaziabad who likes the part where code meets the business: <em>pages that load fast, stores that convert</em>, and features the team can actually maintain.</p>
       <div class="text">
         <p>I graduated in Information Technology from Inderprastha Engineering College in 2025 and have been building for real clients ever since. My days are split between Shopify theme work in Liquid and full-stack features in React, Node and MongoDB.</p>
@@ -617,7 +611,7 @@ a.shot:hover{transform:translateY(-4px) rotate(-.4deg); box-shadow:0 24px 50px -
 <section id="contact" style="padding-top:20px">
   <div class="wrap">
     <div class="contact rv">
-      <span class="label" style="color:var(--accent)">Contact</span>
+      <span class="label" style="color:var(--accent-text)">Contact</span>
       <h2>Have a store or app to build? <span>Let's talk.</span></h2>
       <div class="rows">
         <div class="crow"><div><span class="label">Email</span><div class="val">tyagideepak2004@gmail.com</div></div><button class="btn sm" data-copy="tyagideepak2004@gmail.com">Copy</button></div>
